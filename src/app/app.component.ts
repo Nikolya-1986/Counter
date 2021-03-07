@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store'
+import { clear, countSelector, decrease, increase } from './reducers/counter';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,26 +10,25 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Counter'
-  counter = 0
   updateDate?: number
 
-
-  get disabledButton(): boolean {
-    return this.counter <= 0
-  }
+  count$ = this.store.select(countSelector);//получение подписчика на состояние хранилища
+  disabledButton$ = this.count$.pipe(map(count => count <= 0));
+  
+  constructor(private store: Store){ }
 
   increase(): void {
     this.updateDate = Date.now()
-    this.counter++
+    this.store.dispatch(increase())//обращаясь к хранилищу пишет какой тип action проиходит
   }
 
   decrease(): void {
     this.updateDate = Date.now()
-    this.counter--
+    this.store.dispatch(decrease())
   }
 
   clear(): void {
     this.updateDate = Date.now()
-    this.counter = 0
+    this.store.dispatch(clear())
   }
 }

@@ -8,19 +8,20 @@
     <button 
         class="btn btn-success fs-1 mag pad"
         (click)="decrease()"
-        [disabled]="disabledButton"
+        [disabled]="disabledButton$ | async"
         >
         Decrease
     </button>
     <button 
         class="btn btn-danger fs-1 mag pad"
         (click)="clear()"
-        [disabled]="disabledButton"
+        [disabled]="disabledButton$ | async"
         >
         Clear
     </button>
     <p class="fs-1">
-        Counter = {{ counter }}
+      <!-- Для работы с Observable используем async -->
+        Counter = {{ count$ | async }}
     </p>
     <p 
         class="fs-1"
