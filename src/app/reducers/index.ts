@@ -1,13 +1,13 @@
 import {ActionReducerMap, MetaReducer} from '@ngrx/store';
 import {environment} from '../../environments/environment';
-import {counterReducer, CounterState} from './counter';
+import {COUNTER_KEY, counterReducer, CounterState} from './counter';
 
 export interface State {//подключение интерфейса для счётчика
-  counter: CounterState;
+  [COUNTER_KEY]: CounterState;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  counter: counterReducer,
+  [COUNTER_KEY]: counterReducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
